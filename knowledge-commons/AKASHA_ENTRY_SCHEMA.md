@@ -1,14 +1,47 @@
 # Akasha Entry Schema (Knowledge Commons Standard)
+
 **Document ID:** `AKES-001`  
-**Status:** Active Specification  
+**Status:** Active Eden Specification  
 **Layer:** Layer 2 (Digital Infrastructure & Commons)  
 **Format:** Frontmatter-Annotated Markdown (`.md`)
 
 ---
 
+## Provenance
+
+This specification is adapted from **`SYN-AKA-001` — Akasha Entry Format** in the Synthsara corpus.
+
+The parent artifact defines seven canonical semantic fields:
+
+- `WHAT`
+- `WHY`
+- `SOURCE`
+- `DATE`
+- `OWNER`
+- `STATUS`
+- `LINKS`
+
+It also establishes three core documentation rules:
+
+1. documentation enables verification, attribution, and learning without becoming surveillance;
+2. record comes before interpretation;
+3. credit must remain non-extractive and provenance must remain visible.
+
+Operation Eden preserves those semantics while extending them with machine-readable metadata, evidence state, datasets, cryptographic integrity references, and Node identifiers.
+
+---
+
 ## 1. Purpose
 
-The **Akasha Entry Schema** enforces structured, findable, and cryptographically verifiable documentation across the Eden Knowledge Commons. Every experiment, design, failure report, and curriculum entry must conform to this schema to enable automated indexing, cross-node replication, and archival permanence.
+The **Akasha Entry Schema** provides structured, findable, attributable documentation across the Eden Knowledge Commons.
+
+Every experiment, design, failure report, governance decision, field protocol, curriculum artifact, and validated replication intended for Commons persistence should use this schema.
+
+The purpose is not to record everything.
+
+> **If it matters, we record it. If it does not need to persist, we let it go.**
+
+Private thoughts, sensitive personal information, data that could harm people, and unnecessary behavioral records do not belong in the public Akasha.
 
 ---
 
@@ -16,59 +49,192 @@ The **Akasha Entry Schema** enforces structured, findable, and cryptographically
 
 ```yaml
 ---
-akasha_version: "1.0.0"
+akasha_version: "eden-1.0.0"
 entry_id: "AKE-ECOL-2026-001"
-title: "Riparian Strip Bio-Silt Trapping via Native Vetiver & Willow Staking"
-domain: "ecology" # Options: ecology | agriculture | technology | governance | infrastructure | health | culture
-status: "validated" # Options: draft | in-review | bench-testing | field-testing | validated | superseded | failed
-author:
+
+# Parent Akasha semantics
+what: "Riparian Strip Bio-Silt Trapping via Native Willow Staking"
+why: "Test a low-cost method for reducing bank erosion and suspended sediment at a restoration site."
+source:
+  summary: "Operation Eden ecological seed experiment"
+  derived_from:
+    - "SYN-AKA-001"
+  related_specs:
+    - "OETS-001-REV-0.1.2"
+  source_links: []
+
+date:
+  created: "2026-08-17"
+  updated: "2026-08-17"
+
+owner:
   name: "Local Watershed Guild"
   node_id: "eden-us-ga-001"
-  contact_sig: "ed25519:3d4017c3e8..."
-date_created: "2026-08-17"
-date_updated: "2026-08-17"
+  contact: null
+  contact_sig: null
+
+status: "ACTIVE"
+# Parent lifecycle values:
+# DRAFT | REVIEW | ACTIVE | ARCHIVED | DEPRECATED | DISPUTED
+
+links:
+  prerequisites: []
+  related: []
+  builds_on: []
+  extended_by: []
+
+# Eden extensions
+domain: "ecology"
+# ecology | agriculture | technology | governance | infrastructure | health | education | culture | economy
+
+evidence_status: "field-testing"
+# untested | bench-testing | field-testing | validated | failed | superseded
+
 license: "CC-BY-SA-4.0"
 tags:
   - "watershed"
   - "soil-retention"
   - "riparian"
   - "low-tech"
-provenance:
-  derived_from: "SYN-AKA-003-V1"
-  related_specs:
-    - "OETS-001-REV-0.1.2"
-  related_datasets:
-    - "commons/datasets/2026-q3-riparian-turbidity.csv"
+
+related_datasets:
+  - "commons/datasets/2026-q3-riparian-turbidity.csv"
+
+integrity:
+  method: "optional"
+  manifest: null
+  signature: null
 ---
 ```
 
+Cryptographic integrity is supported where useful, especially for telemetry, manifests, and multi-node replication records, but is **not mandatory for every Akasha entry**.
+
+---
+
 ## 3. Standard Body Structure
 
-Every Akasha entry must contain the following five structural sections:
-
 ```markdown
-# [Title Matching Frontmatter]
+# [Title Matching `what`]
 
 ## 1. Executive Summary & Problem Statement
-*Clear 1-paragraph summary of the physical or social challenge addressed.*
+A concise description of the physical, technical, social, or educational problem addressed and why the entry matters.
 
 ## 2. Materials, Tools & Context
-- **Environmental Context:** (Soil type, USDA hardiness zone, annual rainfall, terrain slope)
-- **Bill of Materials / Inputs:** (Exhaustive itemized list with costs and sourcing)
-- **Required Tools:** (Hand tools, machinery, software, sensors)
+- **Environmental / Operating Context:**
+- **Bill of Materials / Inputs:**
+- **Required Tools:**
+- **Dependencies:**
+- **Known Constraints:**
 
 ## 3. Step-by-Step Implementation Protocol
-1. Baseline measurement protocol...
-2. Physical installation sequence...
-3. Ongoing maintenance cadence...
+1. Establish baseline or initial state.
+2. Execute intervention / build procedure.
+3. Record maintenance or observation cadence.
+4. Preserve deviations from the original plan.
 
-## 4. Empirical Results & Telemetry Proof
-- **Baseline Data:** (Pre-intervention soil/water metrics)
-- **Measured Outcomes:** (Quantitative metrics after 30, 90, 180 days)
-- **Artifact Links:** (Raw CSVs, signed telemetry logs)
+## 4. Empirical Results & Evidence
+- **Baseline Data:**
+- **Measured Outcomes:**
+- **Raw Artifact Links:**
+- **Telemetry / Logs:**
+- **Uncertainty / Confounders:**
 
 ## 5. Failure Analysis & Lessons Learned
-- **What Failed:** (Unanticipated biological rot, unexpected frost kill, sensor miscalibration)
-- **What Was Changed:** (The specific adaptation made to resolve the failure)
-- **Guidance for Replicating Nodes:** (What the next node should avoid or adjust)
+- **What Failed:**
+- **What Changed:**
+- **Why It Changed:**
+- **What Remains Unknown:**
+- **Guidance for Replicating Nodes:**
 ```
+
+---
+
+## 4. Status Semantics
+
+### Lifecycle Status
+
+| Status | Meaning |
+|---|---|
+| `DRAFT` | Work in progress; not ready for operational reliance |
+| `REVIEW` | Ready for feedback; not finalized |
+| `ACTIVE` | Current, approved, and in use |
+| `ARCHIVED` | No longer current; preserved for historical reference |
+| `DEPRECATED` | Replaced by a newer entry or protocol |
+| `DISPUTED` | Accuracy, provenance, interpretation, or ownership is contested |
+
+### Evidence Status
+
+| Evidence State | Meaning |
+|---|---|
+| `untested` | Proposal or design without empirical testing |
+| `bench-testing` | Controlled technical test underway |
+| `field-testing` | Real-world test underway |
+| `validated` | Defined acceptance criteria met within documented scope |
+| `failed` | Acceptance criteria not met; retained for learning |
+| `superseded` | Evidence or method replaced by a later implementation |
+
+Lifecycle state and evidence state are intentionally separate. An `ACTIVE` document may still describe a `field-testing` protocol.
+
+---
+
+## 5. Receipts Without Surveillance
+
+Akasha documentation SHOULD enable:
+
+- verification;
+- attribution;
+- replication;
+- learning;
+- correction;
+- historical provenance.
+
+Akasha documentation MUST NOT become a mechanism for:
+
+- tracking private behavior without necessity and consent;
+- punitive dossiers;
+- social-credit scoring;
+- unnecessary personal-data retention;
+- gatekeeping access to general knowledge.
+
+---
+
+## 6. Ledger Over Pattern
+
+The factual record comes first.
+
+Interpretation may be added, debated, revised, or disputed, but interpretation must never overwrite the underlying record.
+
+When an entry contains both observation and inference, label them separately.
+
+---
+
+## 7. Non-Extractive Crediting
+
+When adapting another person's or community's work:
+
+- name the source;
+- link the source when possible;
+- identify modifications;
+- preserve upstream license obligations;
+- do not silently claim inherited work as original;
+- seek permission where the license or context requires it.
+
+---
+
+## 8. Minimum Viable Entry
+
+When a full entry is not yet practical, preserve at minimum:
+
+```text
+WHAT:   [Title]
+WHY:    [One sentence]
+SOURCE: [Origin]
+DATE:   [YYYY-MM-DD]
+OWNER:  [Responsible person or group]
+STATUS: [DRAFT/REVIEW/ACTIVE/...]
+LINKS:  [Related artifacts if known]
+```
+
+The structured Eden schema may be completed later without erasing the original minimal record.
+
+**Pattern must never overwrite record.**
