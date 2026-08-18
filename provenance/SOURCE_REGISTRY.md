@@ -34,6 +34,7 @@ A derived Eden document must state what was inherited, what was changed, and wha
 | `standards/DATA_SOVEREIGNTY.md` | `SYN-DATA-011` | Genesis Privacy Trinity Binding | Specification | Merged / Binding | Imports zero-write private mode, revocable consent, consent receipts, data minimization, and testable privacy promises; adapts them to Eden environmental/community/governance data classes | Strongest repository-native privacy specification in the current registry; authority beyond its repository and complete test coverage remain governance questions |
 | `governance/MECHANISM_DESIGN.md` | `SYN-GOV-001` | Synthsara: An Executable Mechanism-Design Specification | Specification | Final Draft | Adapts due process, bounded authority, anti-Goodhart constraints, AI authority limits, threat modeling, and simulation-before-deployment into an Eden governance profile | Source explicitly frames itself as falsifiable and does not claim universal incentive compatibility, perfect privacy, permanent Sybil immunity, or capture-proof governance |
 | `specs/OETS-001/OETS-001-REV-0.1.2.md` | Operation Eden native | Eden Environmental Telemetry Unit | Specification | Bench Freeze / M1 Authorized | Native Eden engineering specification | No claim that EETU-01 existed in historical Synthsara source corpus |
+| `specs/OETS-001/bench/OETS-001-M1A-SRC-FROZEN.md` + `firmware/eetu-01/m1a/` | `OETS-001-REV-0.1.2` | EETU-01 M1A Witness Core | Implementation | Frozen Bench Implementation / Ready to Flash | Translates the OETS-001 bench architecture into executable ESP32-S3 firmware, matched validator, deterministic integer cryptographic preimage, RTC trust gate, sensor CRC validation, and cryptographic crash recovery | A committed source freeze is not physical validation; compile, flash, destructive power-cut, endurance, and energy evidence remain pending |
 | `DECLARATION_OF_EDEN.md` | Operation Eden native | Declaration of Eden | Canon / Foundational | Active Eden Founding Document | Native Eden mission and normative orientation | Does not itself establish empirical proof, technical feasibility, or governance mechanics |
 | `STRATEGIC_IMPLEMENTATION_PLAN.md` | Operation Eden native | Operation Eden Strategic Implementation Plan | Specification / Strategy | Active Planning Baseline | Native five-layer execution architecture and replication model | Milestones remain targets until supported by field execution and evidence |
 
@@ -120,6 +121,20 @@ A derived Eden document must state what was inherited, what was changed, and wha
 - Source research position: a falsifiable institutional/computational hypothesis whose claims must be earned through analysis, adversarial simulation, pilots, and public correction.
 - Registry note: current strongest governance formalization; institutional cost and equilibrium analysis remain open.
 
+### OETS-001 M1A Witness Core Source Freeze
+
+- Classification/status: Implementation · Frozen Bench Implementation / Ready to Flash
+- Parent specification: `specs/OETS-001/OETS-001-REV-0.1.2.md`
+- GitHub firmware: `firmware/eetu-01/m1a/main/main.c`
+- GitHub build defaults: `firmware/eetu-01/m1a/sdkconfig.defaults`
+- GitHub validator: `tools/validator/validate_chain.py`
+- GitHub freeze spec: `specs/OETS-001/bench/OETS-001-M1A-SRC-FROZEN.md`
+- Provenance receipt: `provenance/OETS-001-M1A-SOURCE-FREEZE.md`
+- Google Drive archive file ID: `1NFZhQW-ssx-S5EXyHLJfoHzCxYUDh4oGJR0Bub67Fvs`
+- Google Drive Operation Eden folder ID: `1CvyQkJ-A6cSs8pS9RIv7AhgvqUiEAdWs`
+- Frozen behavior: DS3231 OSF/24h trust gate, SHT40 CRC-8 rejection, integer centi-unit canonicalization, full-ledger cryptographic recovery, invalid-tail truncation, matched Python SHA-256 verification.
+- Evidence boundary: source is versioned, but target compilation, flash/boot, destructive power-cut recovery, endurance, and M2 energy profiling remain unverified until bench artifacts are attached.
+
 ---
 
 ## Transformation Policy
@@ -164,7 +179,13 @@ SYNTHSARA SOURCE CORPUS
                               ┌────────────┴────────────┐
                               ▼                         ▼
                          EETU-01                  Seed Projects
-                              │                         │
+                              │
+                              ▼
+                    M1A WITNESS CORE SOURCE FREEZE
+                              │
+                              ▼
+                       PHYSICAL BENCH EVIDENCE
+                              │
                               └────────────┬────────────┘
                                            ▼
                                      FIELD EVIDENCE
